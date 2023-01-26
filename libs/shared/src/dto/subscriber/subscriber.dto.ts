@@ -5,6 +5,7 @@ interface IChannelCredentials {
   webhookUrl?: string;
   deviceTokens?: string[];
   chatUserId?: string;
+  secret?: string;
 }
 
 interface IChannelSettings {

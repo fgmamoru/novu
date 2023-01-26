@@ -51,4 +51,5 @@ export class IChannelCredentials {
   webhookUrl?: string;
   deviceTokens?: string[];
   chatUserId?: string;
+  secret?: string;
 }

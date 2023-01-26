@@ -61,6 +61,7 @@ export enum ChatProviderIdEnum {
   Discord = 'discord',
   MsTeams = 'msteams',
   Telegram = 'telegram',
+  Webhook = 'webhook',
 }
 
 export enum PushProviderIdEnum {

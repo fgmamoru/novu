@@ -11,6 +11,7 @@ interface IChannelCredentials {
   webhookUrl?: string;
   deviceTokens?: string[];
   chatUserId?: string;
+  secret?: string;
 }
 
 export class Subscribers extends WithHttp implements ISubscribers {

@@ -62,6 +62,7 @@ export interface IChatOptions {
   content: string;
   chatUserId?: string;
   botToken?: string;
+  secret: string;
 }
 
 export interface ISendMessageSuccessResponse {

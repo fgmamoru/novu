@@ -179,6 +179,10 @@
     {
       "name": "🔔 @novu/telegram",
       "path": "providers/telegram"
+    },
+    {
+      "name": "🔔 @novu/webhookProvider",
+      "path": "providers/webhookProvider"
     }
   ],
   "settings": {

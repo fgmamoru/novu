@@ -40,4 +40,13 @@ export const chatProviders: IProviderConfig[] = [
     logoFileName: { light: 'telegram.svg', dark: 'telegram.svg' },
     betaVersion: true,
   },
+  {
+    id: ChatProviderIdEnum.Webhook,
+    displayName: 'Webhook',
+    channel: ChannelTypeEnum.CHAT,
+    credentials: [] as IConfigCredentials[],
+    docReference: 'https://web.novu.com/docs/webhooks',
+    logoFileName: { light: 'webhook.svg', dark: 'webhook.svg' },
+    betaVersion: true,
+  },
 ];

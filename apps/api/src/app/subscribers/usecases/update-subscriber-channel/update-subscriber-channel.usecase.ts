@@ -125,6 +125,9 @@ export class UpdateSubscriberChannel {
       if (command.credentials.chatUserId != null && updatePayload.credentials) {
         updatePayload.credentials.chatUserId = command.credentials.chatUserId;
       }
+      if (command.credentials.secret != null && updatePayload.credentials) {
+        updatePayload.credentials.secret = command.credentials.secret;
+      }
     }
 
     return updatePayload;

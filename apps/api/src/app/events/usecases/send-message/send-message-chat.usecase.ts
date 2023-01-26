@@ -18,6 +18,7 @@ import {
   ChatProviderIdEnum,
   ExecutionDetailsSourceEnum,
   ExecutionDetailsStatusEnum,
+  IChannelSettings,
 } from '@novu/shared';
 import { CompileTemplate, CompileTemplateCommand } from '../../../content-templates/usecases';
 import {
@@ -117,8 +118,8 @@ export class SendMessageChat extends SendMessageBase {
 
   private async sendChannelMessage(
     command: SendMessageCommand,
-    subscriberChannel,
-    notification,
+    subscriberChannel: IChannelSettings,
+    notification: NotificationEntity,
     chatChannel,
     content: string
   ) {
@@ -136,6 +137,8 @@ export class SendMessageChat extends SendMessageBase {
 
     const chatWebhookUrl = command.payload.webhookUrl || subscriberChannel.credentials?.webhookUrl;
     const chatUserId = command.payload.userId || subscriberChannel.credentials?.chatUserId;
+    const secret = command.payload.secret || subscriberChannel.credentials?.secret;
+    console.log(subscriberChannel);
 
     if (!chatWebhookUrl && !chatUserId) {
       await this.createExecutionDetails.execute(
@@ -161,6 +164,7 @@ export class SendMessageChat extends SendMessageBase {
       transactionId: command.transactionId,
       chatWebhookUrl: chatWebhookUrl,
       chatUserId: chatUserId,
+      // secret: secret,
       content: this.storeContent() ? content : null,
       providerId: subscriberChannel.providerId,
       _jobId: command.jobId,
@@ -195,7 +199,7 @@ export class SendMessageChat extends SendMessageBase {
     );
 
     if ((chatWebhookUrl || chatUserId) && integration) {
-      await this.sendMessage(chatWebhookUrl, chatUserId, integration, content, message, command, notification);
+      await this.sendMessage(chatWebhookUrl, chatUserId, secret, integration, content, message, command, notification);
 
       return;
     }
@@ -264,6 +268,7 @@ export class SendMessageChat extends SendMessageBase {
   private async sendMessage(
     chatWebhookUrl: string,
     chatUserId: string,
+    secret: string,
     integration: IntegrationEntity,
     content: string,
     message: MessageEntity,
@@ -277,6 +282,7 @@ export class SendMessageChat extends SendMessageBase {
       const result = await chatHandler.send({
         webhookUrl: chatWebhookUrl,
         chatUserId: chatUserId,
+        secret,
         content,
       });
 
