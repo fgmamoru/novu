@@ -30,4 +30,13 @@ export const chatProviders: IProviderConfig[] = [
       'https://docs.microsoft.com/en-us/microsoftteams/platform/webhooks-and-connectors/how-to/add-incoming-webhook',
     logoFileName: { light: 'msteams.svg', dark: 'msteams.svg' },
   },
+  {
+    id: ChatProviderIdEnum.Webhook,
+    displayName: 'Webhook',
+    channel: ChannelTypeEnum.CHAT,
+    credentials: [] as IConfigCredentials[],
+    docReference: 'https://web.novu.com/docs/webhooks',
+    logoFileName: { light: 'webhook.svg', dark: 'webhook.svg' },
+    betaVersion: true,
+  },
 ];

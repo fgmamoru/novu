@@ -50,4 +50,5 @@ export class IChannelSettings {
 export class IChannelCredentials {
   webhookUrl?: string;
   deviceTokens?: string[];
+  secret?: string;
 }

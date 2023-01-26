@@ -4,6 +4,7 @@ import { EnvironmentId, ExternalSubscriberId, OrganizationId } from '../../types
 interface IChannelCredentials {
   webhookUrl?: string;
   deviceTokens?: string[];
+  secret?: string;
 }
 
 interface IChannelSettings {

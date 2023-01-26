@@ -122,6 +122,9 @@ export class UpdateSubscriberChannel {
       if (command.credentials.deviceTokens != null && updatePayload.credentials) {
         updatePayload.credentials.deviceTokens = command.credentials.deviceTokens;
       }
+      if (command.credentials.secret != null && updatePayload.credentials) {
+        updatePayload.credentials.secret = command.credentials.secret;
+      }
     }
 
     return updatePayload;

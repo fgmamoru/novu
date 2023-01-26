@@ -60,6 +60,7 @@ export interface IPushOptions {
 export interface IChatOptions {
   webhookUrl: string;
   content: string;
+  secret: string;
 }
 
 export interface ISendMessageSuccessResponse {
