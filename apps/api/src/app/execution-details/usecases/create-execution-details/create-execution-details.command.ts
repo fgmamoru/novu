@@ -6,6 +6,10 @@ import { JobEntity } from '@novu/dal';
 
 export enum DetailEnum {
   CHAT_WEBHOOK_URL_MISSING = 'Webhook URL/chatUserId for the chat channel is missing',
+  REPLY_CALLBACK_MISSING_REPLAY_CALLBACK_URL = 'Inbound mail - Missing replay callback URL',
+  REPLY_CALLBACK_NOT_CONFIGURATION = 'Inbound mail - Missing configuration',
+  REPLY_CALLBACK_MISSING_MX_RECORD_CONFIGURATION = 'Inbound mail - Missing MX Record configuration',
+  REPLY_CALLBACK_MISSING_MX_ROUTE_DOMAIN_CONFIGURATION = 'Inbound mail - Missing MX route domain configuration',
   STEP_CREATED = 'Step created',
   STEP_QUEUED = 'Step queued',
   STEP_DELAYED = 'Step delayed',
