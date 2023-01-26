@@ -26,7 +26,7 @@ To connect our subscribers we need to get chat_id, to get chat_id for channel/gr
 
 1. Add your bot to telegram channel as admin and for group add as member.
 2. send a test message for your channel/group
-3. Get the list of updates for your BOT using bot REST API
+3. Get the list of updates for your BOT using bot REST API, i.e: `https://api.telegram.org/bot<BOT_URL_HERE>/getUpdates`
 4. You get messages like this: "message":{"message_id":16,"from":{"id":123,"is_bot":false,"first_name":"xx","last_name":"yy","username":"xyz"},"chat":{"id":**-1001874782164**,"title":"xxx","username":"yyy","type":"supergroup"},"date":1673878544,"text":"test message"}}
 
    In the above message your channel/group chat_id is **-1001874782164**
