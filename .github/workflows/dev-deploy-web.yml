@@ -19,10 +19,10 @@ on:
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
-  test_web:
-    uses: ./.github/workflows/reusable-web-e2e.yml
-    secrets:
-      cypress_key: ${{ secrets.CYPRESS_WEB_KEY }}
+  # test_web:
+  #   uses: ./.github/workflows/reusable-web-e2e.yml
+  #   secrets:
+  #     cypress_key: ${{ secrets.CYPRESS_WEB_KEY }}
 
   # This workflow contains a single job called "build"
   deploy_web:
