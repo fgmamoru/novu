@@ -109,5 +109,5 @@ jobs:
           netlify-config-path: apps/web/netlify.toml
         env:
           NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
-          NETLIFY_SITE_ID: $NOVU_DASHBOARD_NETLIFY_ID
+          NETLIFY_SITE_ID: ${{env.NOVU_DASHBOARD_NETLIFY_ID}}
         timeout-minutes: 1
