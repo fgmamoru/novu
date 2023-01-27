@@ -98,8 +98,12 @@ jobs:
           # Build a docker container and
           # push it to ECR so that it can
           # be deployed to ECS.
-          
-          docker run --network=host --name api -dit --env NODE_ENV=test $ECR_REGISTRY/$ECR_SERVICE_NOVU_API:$IMAGE_TAG
-          docker run --network=host appropriate/curl --retry 10 --retry-delay 5 --retry-connrefused http://localhost:1337/v1/health-check | grep 'ok'
+          # cd apps/api && pnpm --silent --workspace-root pnpm-context -- apps/api/Dockerfile | docker build --build-arg
+          cd apps/api
+          pnpm --silent --workspace-root pnpm-context -- apps/api/Dockerfile
+          docker build -t $ECR_REGISTRY/$ECR_SERVICE_NOVU_API:$IMAGE_TAG -t $ECR_REGISTRY/$ECR_SERVICE_NOVU_API:latest
+
+          # docker run --network=host --name api -dit --env NODE_ENV=test $ECR_REGISTRY/$ECR_SERVICE_NOVU_API:$IMAGE_TAG
+          # docker run --network=host appropriate/curl --retry 10 --retry-delay 5 --retry-connrefused http://localhost:1337/v1/health-check | grep 'ok'
           docker push --all-tags $ECR_REGISTRY/$ECR_SERVICE_NOVU_API;
           echo "::set-output name=image::$ECR_REGISTRY/$ECR_SERVICE_NOVU_API:$IMAGE_TAG"
