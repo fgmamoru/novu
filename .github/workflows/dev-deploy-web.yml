@@ -12,6 +12,7 @@ on:
     branches:
       - next
       - main
+      - next-mamoru
     paths:
       - 'apps/web/**'
       - 'libs/shared/**'
