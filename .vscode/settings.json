@@ -19,5 +19,15 @@
   },
   "cSpell.words": [
     "mantine"
-  ]
+  ],
+  "workbench.colorCustomizations": {
+    "statusBar.background": "#ff7043",
+    "statusBar.foreground": "#fbe9e7",
+
+    "titleBar.activeBackground": "#e91e63",
+    "titleBar.activeForeground": "#fce4ec",
+    "titleBar.inactiveBackground": "#ff80ab",
+    "titleBar.inactiveForeground": "#fce4ec",
+    "cSpell.enabled": false
+  }
 }
