@@ -5,8 +5,6 @@ import {
 import { IChatProvider } from '../provider/provider.interface';
 import { IMessage, ITriggerPayload } from '../template/template.interface';
 
-console.log('CHAT HANDLER');
-
 export class ChatHandler {
   private readonly contentEngine: IContentEngine;
 
@@ -31,8 +29,6 @@ export class ChatHandler {
         'webhookUrl is missing in trigger payload. To send an a chat message you must specify a webhookUrl property.'
       );
     }
-
-    console.log('data', data);
 
     return await this.provider.sendMessage({
       webhookUrl: data.$webhookUrl as string,
