@@ -3,7 +3,7 @@
 name: Deploy DEV WEB
 env:
   NOVU_DASHBOARD_NETLIFY_ID: a7f92b8f-5db7-47a9-ba8f-53c8cbe0d7e0
-
+  ECR_SERVICE_NOVU_WEB: novu/web
 # Controls when the action will run. Triggers the workflow on push or pull request
 # events but only for the master branch
 on:
@@ -111,3 +111,26 @@ jobs:
           NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
           NETLIFY_SITE_ID: ${{env.NOVU_DASHBOARD_NETLIFY_ID}}
         timeout-minutes: 1
+      # TO ECR
+      - name: Remove build outputs
+        working-directory: apps/web
+        run: rm -rf build
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@13d241b293754004c80624b5567555c4a39ffbe3
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ secrets.AWS_REGION }}
+      - name: Login to Amazon ECR
+        id: login-ecr
+        uses: aws-actions/amazon-ecr-login@aaf69d68aa3fb14c1d5a6be9ac61fe15b48453a2
+      - name: Build, tag, and push image to Amazon ECR
+        env:
+          ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
+          IMAGE_TAG: ${{ github.sha }}
+        run: |
+          docker build --push \
+            -t $ECR_REGISTRY/$ECR_SERVICE_NOVU_WEB:$IMAGE_TAG \
+            -t $ECR_REGISTRY/$ECR_SERVICE_NOVU_WEB:latest \
+            -f apps/web/Dockerfile .
+          echo "::set-output name=IMAGE::ghcr.io/$REGISTRY_OWNER/$DOCKER_NAME:$IMAGE_TAG"
