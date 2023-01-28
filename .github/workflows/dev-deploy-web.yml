@@ -78,7 +78,7 @@ jobs:
           echo REACT_APP_WIDGET_EMBED_PATH="${{ env.NOVU_REACT_APP_WIDGET_EMBED_PATH }}" >> .env
           echo REACT_APP_NOVU_APP_ID=${{ secrets.NOVU_APP_ID }} >> .env
           echo REACT_APP_SEGMENT_KEY=${{ secrets.WEB_SEGMENT_KEY }} >> .env
-          echo REACT_APP_SENTRY_DSN="${{env.NOVU_REACT_APP_WS_URL }}" >> .env
+          echo REACT_APP_SENTRY_DSN="${{env.NOVU_SENTRY_DSN }}" >> .env
           echo REACT_APP_ENVIRONMENT=${{ env.NOVU_ENVIRONMENT }} >> .env
           echo REACT_APP_MAIL_SERVER_DOMAIN="dev.inbound-mail.novu.co" >> .env
 
