@@ -129,8 +129,10 @@ jobs:
           ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
           IMAGE_TAG: ${{ github.sha }}
         run: |
-          docker build --push \
+          docker build \
             -t $ECR_REGISTRY/$ECR_SERVICE_NOVU_WEB:$IMAGE_TAG \
             -t $ECR_REGISTRY/$ECR_SERVICE_NOVU_WEB:latest \
             -f apps/web/Dockerfile .
-          echo "::set-output name=IMAGE::ghcr.io/$REGISTRY_OWNER/$DOCKER_NAME:$IMAGE_TAG"
+          docker push --all-tags $ECR_REGISTRY/$ECR_SERVICE_NOVU_WEB;
+
+          echo "::set-output name=IMAGE::/$REGISTRY_OWNER/$DOCKER_NAME:$IMAGE_TAG"
