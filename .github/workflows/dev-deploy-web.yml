@@ -4,10 +4,11 @@ name: Deploy DEV WEB
 env:
   NOVU_DASHBOARD_NETLIFY_ID: a7f92b8f-5db7-47a9-ba8f-53c8cbe0d7e0
   ECR_SERVICE_NOVU_WEB: novu/web
-  NOVU_REACT_APP_API_URL: https://dev.api.novu.co
-  NOVU_REACT_APP_WS_URL: ws://dev.api.novu.co
-  NOVU_REACT_APP_WIDGET_EMBED_PATH: https://dev.embed.novu.co/embed.umd.min.js
-  NOVU_SENTRY_DSN: https://2b5160da86384949be4cc66679c54e79@o1161119.ingest.sentry.io/6250907
+  NOVU_REACT_APP_API_URL: https://api.novu.dev.mamoru.foundation
+  NOVU_REACT_APP_WS_URL: ws://api.novu.dev.mamoru.foundation
+  NOVU_REACT_APP_WIDGET_EMBED_PATH: https://api.novu.dev.mamoru.foundation/embed.umd.min.js
+  NOVU_REACT_APP_MAIL_SERVER_DOMAIN: dev.inbound-mail.novu.co
+  NOVU_SENTRY_DSN: https://c6aabf2f43a742769716f4b5199b4374@o4504587845959680.ingest.sentry.io/4504587849302016
   NOVU_ENVIRONMENT: dev 
 # Controls when the action will run. Triggers the workflow on push or pull request
 # events but only for the master branch
@@ -80,7 +81,7 @@ jobs:
           echo REACT_APP_SEGMENT_KEY=${{ secrets.WEB_SEGMENT_KEY }} >> .env
           echo REACT_APP_SENTRY_DSN="${{env.NOVU_SENTRY_DSN }}" >> .env
           echo REACT_APP_ENVIRONMENT=${{ env.NOVU_ENVIRONMENT }} >> .env
-          echo REACT_APP_MAIL_SERVER_DOMAIN="dev.inbound-mail.novu.co" >> .env
+          echo REACT_APP_MAIL_SERVER_DOMAIN="${{env.NOVU_REACT_APP_MAIL_SERVER_DOMAIN}}" >> .env
 
       - name: Envsetup
         working-directory: apps/web
@@ -97,7 +98,7 @@ jobs:
           REACT_APP_NOVU_APP_ID: ${{ secrets.NOVU_APP_ID }}
           REACT_APP_SENTRY_DSN: ${{ env.NOVU_SENTRY_DSN }}
           REACT_APP_ENVIRONMENT: ${{ env.NOVU_ENVIRONMENT }}
-          REACT_APP_MAIL_SERVER_DOMAIN: dev.inbound-mail.novu.co
+          REACT_APP_MAIL_SERVER_DOMAIN: ${{env.NOVU_REACT_APP_MAIL_SERVER_DOMAIN}}
 
         working-directory: apps/web
         run: npm run build
