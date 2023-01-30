@@ -2,14 +2,23 @@
 
 name: Deploy DEV WEB
 env:
-  NOVU_DASHBOARD_NETLIFY_ID: a7f92b8f-5db7-47a9-ba8f-53c8cbe0d7e0
   ECR_SERVICE_NOVU_WEB: novu/web
-  NOVU_REACT_APP_API_URL: https://api.novu.dev.mamoru.foundation
-  NOVU_REACT_APP_WS_URL: ws://api.novu.dev.mamoru.foundation
-  NOVU_REACT_APP_WIDGET_EMBED_PATH: https://api.novu.dev.mamoru.foundation/embed.umd.min.js
-  NOVU_REACT_APP_MAIL_SERVER_DOMAIN: dev.inbound-mail.novu.co
-  NOVU_SENTRY_DSN: https://c6aabf2f43a742769716f4b5199b4374@o4504587845959680.ingest.sentry.io/4504587849302016
-  NOVU_ENVIRONMENT: dev 
+  
+  NOVU_DEV_DASHBOARD_NETLIFY_ID: a7f92b8f-5db7-47a9-ba8f-53c8cbe0d7e0
+  NOVU_DEV_REACT_APP_API_URL: https://api.novu.dev.mamoru.foundation
+  NOVU_DEV_REACT_APP_WS_URL: wss://api.novu.dev.mamoru.foundation
+  NOVU_DEV_REACT_APP_WIDGET_EMBED_PATH: https://api.novu.dev.mamoru.foundation/embed.umd.min.js
+  NOVU_DEV_REACT_APP_MAIL_SERVER_DOMAIN: dev.inbound-mail.novu.co
+  NOVU_DEV_SENTRY_DSN: https://c6aabf2f43a742769716f4b5199b4374@o4504587845959680.ingest.sentry.io/4504587849302016
+  NOVU_DEV_ENVIRONMENT: dev
+
+  NOVU_LOCAL_DASHBOARD_NETLIFY_ID: d5e7bce8-55e2-4dc2-80fa-cc64855e181d
+  NOVU_LOCAL_REACT_APP_API_URL: http://localhost:4201
+  NOVU_LOCAL_REACT_APP_WS_URL: ws://localhost:4203
+  NOVU_LOCAL_REACT_APP_WIDGET_EMBED_PATH: https://localhost:4701/embed.umd.min.js
+  NOVU_LOCAL_REACT_APP_MAIL_SERVER_DOMAIN: dev.inbound-mail.novu.co
+  NOVU_LOCAL_SENTRY_DSN: https://c6aabf2f43a742769716f4b5199b4374@o4504587845959680.ingest.sentry.io/4504587849302016
+  NOVU_LOCAL_ENVIRONMENT: dev
 # Controls when the action will run. Triggers the workflow on push or pull request
 # events but only for the master branch
 on:
@@ -76,14 +85,14 @@ jobs:
         working-directory: apps/web
         run: |
           touch .env
-          echo REACT_APP_API_URL="${{ env.NOVU_REACT_APP_API_URL }}" >> .env
-          echo REACT_APP_WS_URL="${{ env.NOVU_REACT_APP_WS_URL }}" >> .env
-          echo REACT_APP_WIDGET_EMBED_PATH="${{ env.NOVU_REACT_APP_WIDGET_EMBED_PATH }}" >> .env
-          echo REACT_APP_NOVU_APP_ID=${{ secrets.NOVU_APP_ID }} >> .env
+          echo REACT_APP_API_URL="${{ env.NOVU_DEV_REACT_APP_API_URL }}" >> .env
+          echo REACT_APP_WS_URL="${{ env.NOVU_DEV_REACT_APP_WS_URL }}" >> .env
+          echo REACT_APP_WIDGET_EMBED_PATH="${{ env.NOVU_DEV_REACT_APP_WIDGET_EMBED_PATH }}" >> .env
+          # echo REACT_APP_NOVU_APP_ID=${{ secrets.NOVU_DEV_APP_ID }} >> .env
           echo REACT_APP_SEGMENT_KEY=${{ secrets.WEB_SEGMENT_KEY }} >> .env
-          echo REACT_APP_SENTRY_DSN="${{env.NOVU_SENTRY_DSN }}" >> .env
-          echo REACT_APP_ENVIRONMENT=${{ env.NOVU_ENVIRONMENT }} >> .env
-          echo REACT_APP_MAIL_SERVER_DOMAIN="${{env.NOVU_REACT_APP_MAIL_SERVER_DOMAIN}}" >> .env
+          echo REACT_APP_SENTRY_DSN="${{env.NOVU_DEV_SENTRY_DSN }}" >> .env
+          echo REACT_APP_ENVIRONMENT=${{ env.NOVU_DEV_ENVIRONMENT }} >> .env
+          echo REACT_APP_MAIL_SERVER_DOMAIN="${{env.NOVU_DEV_REACT_APP_MAIL_SERVER_DOMAIN}}" >> .env
 
       - name: Envsetup
         working-directory: apps/web
@@ -93,14 +102,14 @@ jobs:
       - name: Build
         env:
           REACT_APP_SEGMENT_KEY: ${{ secrets.WEB_SEGMENT_KEY }}
-          REACT_APP_INTERCOM_APP_ID: ${{ secrets.INTERCOM_APP_ID }}
-          REACT_APP_API_URL: ${{ env.NOVU_REACT_APP_API_URL }}
-          REACT_APP_WS_URL: ${{ env.NOVU_REACT_APP_WS_URL }}
-          REACT_APP_WIDGET_EMBED_PATH: ${{ env.NOVU_REACT_APP_WIDGET_EMBED_PATH }}
-          REACT_APP_NOVU_APP_ID: ${{ secrets.NOVU_APP_ID }}
-          REACT_APP_SENTRY_DSN: ${{ env.NOVU_SENTRY_DSN }}
-          REACT_APP_ENVIRONMENT: ${{ env.NOVU_ENVIRONMENT }}
-          REACT_APP_MAIL_SERVER_DOMAIN: ${{env.NOVU_REACT_APP_MAIL_SERVER_DOMAIN}}
+          # REACT_APP_INTERCOM_APP_ID: ${{ secrets.INTERCOM_APP_ID }}
+          REACT_APP_API_URL: ${{ env.NOVU_DEV_REACT_APP_API_URL }}
+          REACT_APP_WS_URL: ${{ env.NOVU_DEV_REACT_APP_WS_URL }}
+          REACT_APP_WIDGET_EMBED_PATH: ${{ env.NOVU_DEV_REACT_APP_WIDGET_EMBED_PATH }}
+          # REACT_APP_NOVU_APP_ID: ${{ secrets.NOVU_DEV_APP_ID }}
+          REACT_APP_SENTRY_DSN: ${{ env.NOVU_DEV_SENTRY_DSN }}
+          REACT_APP_ENVIRONMENT: ${{ env.NOVU_DEV_ENVIRONMENT }}
+          REACT_APP_MAIL_SERVER_DOMAIN: ${{env.NOVU_DEV_REACT_APP_MAIL_SERVER_DOMAIN}}
 
         working-directory: apps/web
         run: npm run build
@@ -117,7 +126,104 @@ jobs:
           netlify-config-path: apps/web/netlify.toml
         env:
           NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
-          NETLIFY_SITE_ID: ${{env.NOVU_DASHBOARD_NETLIFY_ID}}
+          NETLIFY_SITE_ID: ${{env.NOVU_DEV_DASHBOARD_NETLIFY_ID}}
+        timeout-minutes: 1
+      # TO ECR
+      - name: Remove build outputs
+        working-directory: apps/web
+        run: rm -rf build
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@13d241b293754004c80624b5567555c4a39ffbe3
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ secrets.AWS_REGION }}
+      - name: Login to Amazon ECR
+        id: login-ecr
+        uses: aws-actions/amazon-ecr-login@aaf69d68aa3fb14c1d5a6be9ac61fe15b48453a2
+      - name: Build, tag, and push image to Amazon ECR
+        env:
+          ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
+          IMAGE_TAG: ${{ github.sha }}
+        run: |
+          docker buildx build \
+            -t $ECR_REGISTRY/$ECR_SERVICE_NOVU_WEB:$IMAGE_TAG \
+            -t $ECR_REGISTRY/$ECR_SERVICE_NOVU_WEB:latest \
+            -f apps/web/Dockerfile .
+          docker push --all-tags $ECR_REGISTRY/$ECR_SERVICE_NOVU_WEB;
+
+          echo "::set-output name=IMAGE::/$REGISTRY_OWNER/$DOCKER_NAME:$IMAGE_TAG"
+
+
+      - uses: actions/checkout@v2
+      - name: Setup kernel for react native, increase watchers
+        run: echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf && sudo sysctl -p
+      - uses: actions/setup-node@v2
+        with:
+          node-version: '16.15.1'
+
+      - name: Cache pnpm modules
+        uses: actions/cache@v2
+        with:
+          path: ~/.pnpm-store
+          key: ${{ runner.os }}-${{ hashFiles('**/pnpm-lock.yaml') }}
+          restore-keys: |
+            ${{ runner.os }}-
+
+      - uses: pnpm/action-setup@v2.0.1
+        with:
+          version: 7.5.0
+          run_install: true
+
+      - name: Build
+        run: CI='' pnpm build:web
+
+      - name: Create env file
+        working-directory: apps/web
+        run: |
+          touch .env
+          echo REACT_APP_API_URL="${{ env.NOVU_LOCAL_REACT_APP_API_URL }}" >> .env
+          echo REACT_APP_WS_URL="${{ env.NOVU_LOCAL_REACT_APP_WS_URL }}" >> .env
+          echo REACT_APP_WIDGET_EMBED_PATH="${{ env.NOVU_LOCAL_REACT_APP_WIDGET_EMBED_PATH }}" >> .env
+          # echo REACT_APP_NOVU_APP_ID=${{ secrets.NOVU_LOCAL_APP_ID }} >> .env
+          echo REACT_APP_SEGMENT_KEY=${{ secrets.WEB_SEGMENT_KEY }} >> .env
+          echo REACT_APP_SENTRY_DSN="${{env.NOVU_LOCAL_SENTRY_DSN }}" >> .env
+          echo REACT_APP_ENVIRONMENT=${{ env.NOVU_LOCAL_ENVIRONMENT }} >> .env
+          echo REACT_APP_MAIL_SERVER_DOMAIN="${{env.NOVU_LOCAL_REACT_APP_MAIL_SERVER_DOMAIN}}" >> .env
+
+      - name: Envsetup
+        working-directory: apps/web
+        run: npm run envsetup
+
+      # Runs a single command using the runners shell
+      - name: Build
+        env:
+          REACT_APP_SEGMENT_KEY: ${{ secrets.WEB_SEGMENT_KEY }}
+          # REACT_APP_INTERCOM_APP_ID: ${{ secrets.INTERCOM_APP_ID }}
+          REACT_APP_API_URL: ${{ env.NOVU_LOCAL_REACT_APP_API_URL }}
+          REACT_APP_WS_URL: ${{ env.NOVU_LOCAL_REACT_APP_WS_URL }}
+          REACT_APP_WIDGET_EMBED_PATH: ${{ env.NOVU_LOCAL_REACT_APP_WIDGET_EMBED_PATH }}
+          # REACT_APP_NOVU_APP_ID: ${{ secrets.NOVU_LOCAL_APP_ID }}
+          REACT_APP_SENTRY_DSN: ${{ env.NOVU_LOCAL_SENTRY_DSN }}
+          REACT_APP_ENVIRONMENT: ${{ env.NOVU_LOCAL_ENVIRONMENT }}
+          REACT_APP_MAIL_SERVER_DOMAIN: ${{env.NOVU_LOCAL_REACT_APP_MAIL_SERVER_DOMAIN}}
+
+        working-directory: apps/web
+        run: npm run build
+
+      - name: Deploy WEB to DEV
+        uses: nwtgck/actions-netlify@v1.2
+        with:
+          publish-dir: apps/web/build
+          deploy-message: Dev deployment
+          production-deploy: true
+          alias: dev
+          github-deployment-environment: development
+          github-deployment-description: Web Deployment
+          netlify-config-path: apps/web/netlify.toml
+        env:
+          NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
+          NETLIFY_SITE_ID: ${{env.NOVU_LOCAL_DASHBOARD_NETLIFY_ID}}
         timeout-minutes: 1
       # TO ECR
       - name: Remove build outputs
