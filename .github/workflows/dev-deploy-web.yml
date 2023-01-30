@@ -244,8 +244,9 @@ jobs:
           IMAGE_TAG: ${{ github.sha }}
         run: |
           docker buildx build \
-            -t $ECR_REGISTRY/$ECR_SERVICE_NOVU_WEB:$IMAGE_TAG \
-            -t $ECR_REGISTRY/$ECR_SERVICE_NOVU_WEB:latest \
+            -t $ECR_REGISTRY/$ECR_SERVICE_NOVU_WEB:local.$IMAGE_TAG \
+            -t $ECR_REGISTRY/$ECR_SERVICE_NOVU_WEB:local \
+            -t $ECR_REGISTRY/$ECR_SERVICE_NOVU_WEB:latest.local \
             -f apps/web/Dockerfile .
           docker push --all-tags $ECR_REGISTRY/$ECR_SERVICE_NOVU_WEB;
 
