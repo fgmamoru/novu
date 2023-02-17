@@ -5,7 +5,7 @@ env:
   ECR_SERVICE_NOVU_WEB: novu/web
   
   NOVU_DEV_DASHBOARD_NETLIFY_ID: a7f92b8f-5db7-47a9-ba8f-53c8cbe0d7e0
-  NOVU_DEV_REACT_APP_API_URL: http://http://backend.development.mamoru.foundation:4201/
+  NOVU_DEV_REACT_APP_API_URL: http://backend.development.mamoru.foundation:4201/
   NOVU_DEV_REACT_APP_WS_URL: wss://api.novu.dev.mamoru.foundation
   NOVU_DEV_REACT_APP_WIDGET_EMBED_PATH: https://api.novu.dev.mamoru.foundation/embed.umd.min.js
   NOVU_DEV_REACT_APP_MAIL_SERVER_DOMAIN: dev.inbound-mail.novu.co
